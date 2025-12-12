@@ -2,68 +2,221 @@
 <html lang="hu">
 <head>
 <meta charset="UTF-8">
-<title>SigMozi Intro</title>
+<title>SigMozi Hyper Intro</title>
+
 <style>
     body {
         margin: 0;
-        background: black;
-        overflow: hidden;
-        font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         height: 100vh;
-        color: white;
+        overflow: hidden;
+        background: black;
+        font-family: 'Arial Black', sans-serif;
     }
 
-    .logo-container {
-        text-align: center;
-        animation: fadeIn 3s ease forwards;
+    /* TÖBBRÉTEGŰ CSILLAGMEZŐ */
+    .stars1, .stars2, .stars3 {
+        position: absolute;
+        width: 300%;
+        height: 300%;
+        background-size: cover;
+        opacity: 0.4;
+    }
+
+    .stars1 {
+        background: url("https://i.imgur.com/3KcJY1w.png");
+        animation: starMove1 60s linear infinite;
+    }
+    .stars2 {
+        background: url("https://i.imgur.com/aY7uK9I.png");
+        animation: starMove2 90s linear infinite;
+        opacity: 0.25;
+    }
+    .stars3 {
+        background: url("https://i.imgur.com/SWfvPiy.png");
+        animation: starMove3 120s linear infinite;
+        opacity: 0.2;
+    }
+
+    @keyframes starMove1 {
+        from { transform: translate(0,0); }
+        to { transform: translate(-10%, -10%); }
+    }
+    @keyframes starMove2 {
+        from { transform: translate(0,0); }
+        to { transform: translate(-20%, -20%); }
+    }
+    @keyframes starMove3 {
+        from { transform: translate(0,0); }
+        to { transform: translate(-5%, -5%); }
+    }
+
+    /* GALAXIS ÖRVÉNY */
+    .vortex {
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        left: -50%;
+        top: -50%;
+        background: url("https://i.imgur.com/wfZfTYh.png") no-repeat center;
+        background-size: contain;
+        opacity: 0.3;
+        animation: spin 80s linear infinite;
+        filter: blur(2px);
+    }
+
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    /* CINEMATIC LETTERBOX */
+    .letter {
+        position: absolute;
+        width: 100%;
+        height: 120px;
+        background: black;
+        z-index: 100;
+        animation: slideBars 3s ease forwards;
+    }
+    .top { top: -120px; }
+    .bottom { bottom: -120px; }
+
+    @keyframes slideBars {
+        to { transform: translateY(120px); }
+    }
+
+    /* MOZIS FÉNYCSÍK */
+    .light {
+        position: absolute;
+        top: 0;
+        left: -200%;
+        width: 200%;
+        height: 100%;
+        background: linear-gradient(120deg,
+            transparent 0%,
+            rgba(255,255,255,0.12) 50%,
+            transparent 100%);
+        animation: sweep 5s linear infinite;
+        z-index: 10;
+    }
+    @keyframes sweep {
+        from { transform: translateX(-100%); }
+        to { transform: translateX(200%); }
+    }
+
+    /* LOGÓ VILLANÁS */
+    .flash {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: white;
         opacity: 0;
+        pointer-events: none;
+        z-index: 1000;
+        animation: flashAnim 3s ease forwards 2.2s;
     }
 
-    @keyframes fadeIn {
-        to { opacity: 1; }
+    @keyframes flashAnim {
+        0% { opacity: 0; }
+        10% { opacity: 1; }
+        25% { opacity: 0; }
+        100% { opacity: 0; }
     }
 
+    /* LOGO KONTAINER */
+    .logoBox {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.2);
+        text-align: center;
+        opacity: 0;
+        z-index: 999;
+        animation: logoZoom 4s ease forwards 2s;
+    }
+
+    @keyframes logoZoom {
+        from { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+        to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    /* 3D VILLÓGÓ LOGÓ */
     .logo {
-        font-size: 80px;
-        font-weight: bold;
-        letter-spacing: 5px;
+        font-size: 150px;
+        color: #ff0000;
         text-transform: uppercase;
-        animation: glow 2s infinite alternate;
+        letter-spacing: 14px;
+        text-shadow:
+            0 0 40px red,
+            0 0 80px red,
+            10px 10px 0 #300,
+            20px 20px 0 #200;
+        animation: logoPulse 2.5s infinite alternate ease-in-out;
     }
 
-    @keyframes glow {
-        0% { text-shadow: 0 0 10px red; }
-        100% { text-shadow: 0 0 40px red; }
+    @keyframes logoPulse {
+        from { text-shadow: 0 0 30px red, 10px 10px 0 #200; }
+        to { text-shadow: 0 0 80px red, 20px 20px 0 #100; }
     }
 
     .subtitle {
-        margin-top: 20px;
-        font-size: 30px;
+        font-size: 45px;
+        color: #ddd;
         opacity: 0;
-        animation: slideUp 2s ease forwards 2.5s;
+        letter-spacing: 5px;
+        animation: subtitleFade 3s ease forwards 4s;
     }
 
-    @keyframes slideUp {
-        from {
-            opacity: 0;
-            transform: translateY(40px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    @keyframes subtitleFade {
+        to { opacity: 1; }
     }
+
+    /* FILM ZAJ */
+    .noise {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: url('https://i.imgur.com/8aKp4vq.png');
+        opacity: 0.08;
+        mix-blend-mode: screen;
+        animation: noiseMove 0.5s steps(4) infinite;
+        pointer-events: none;
+        z-index: 2000;
+    }
+    @keyframes noiseMove {
+        0% { transform: translate(0,0); }
+        25% { transform: translate(-5px,3px); }
+        50% { transform: translate(3px,-2px); }
+        75% { transform: translate(-2px,2px); }
+        100% { transform: translate(0,0); }
+    }
+
 </style>
 </head>
 <body>
 
-<div class="logo-container">
+<div class="stars1"></div>
+<div class="stars2"></div>
+<div class="stars3"></div>
+
+<div class="vortex"></div>
+<div class="light"></div>
+
+<div class="letter top"></div>
+<div class="letter bottom"></div>
+
+<div class="flash"></div>
+
+<div class="logoBox">
     <div class="logo">SigMozi</div>
-    <div class="subtitle">A film mindjárt kezdődik…</div>
+    <div class="subtitle">A vetítés hamarosan kezdődik...</div>
 </div>
+
+<div class="noise"></div>
+
+<audio autoplay>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_0daa68c14e.mp3">
+</audio>
 
 </body>
 </html>
