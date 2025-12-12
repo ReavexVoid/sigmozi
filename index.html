@@ -2,128 +2,117 @@
 <html lang="hu">
 <head>
 <meta charset="UTF-8">
-<title>SigMozi Hyper Intro</title>
+<title>SigMozi Ultra Cinematic</title>
 
 <style>
     body {
         margin: 0;
         height: 100vh;
         overflow: hidden;
-        background: black;
+        background: url("sigmovie.png") no-repeat center center fixed;
+        background-size: cover;
+        filter: brightness(0.85);
         font-family: 'Arial Black', sans-serif;
     }
 
-    /* TÖBBRÉTEGŰ CSILLAGMEZŐ */
-    .stars1, .stars2, .stars3 {
-        position: absolute;
-        width: 300%;
-        height: 300%;
-        background-size: cover;
-        opacity: 0.4;
+    /* LASSÚ EPIC ZOOM A HÁTTÉREN */
+    body {
+        animation: bgZoom 30s ease-in-out infinite alternate;
+    }
+    @keyframes bgZoom {
+        from { transform: scale(1); }
+        to { transform: scale(1.15); }
     }
 
-    .stars1 {
-        background: url("https://i.imgur.com/3KcJY1w.png");
-        animation: starMove1 60s linear infinite;
-    }
-    .stars2 {
-        background: url("https://i.imgur.com/aY7uK9I.png");
-        animation: starMove2 90s linear infinite;
-        opacity: 0.25;
-    }
-    .stars3 {
-        background: url("https://i.imgur.com/SWfvPiy.png");
-        animation: starMove3 120s linear infinite;
-        opacity: 0.2;
-    }
-
-    @keyframes starMove1 {
-        from { transform: translate(0,0); }
-        to { transform: translate(-10%, -10%); }
-    }
-    @keyframes starMove2 {
-        from { transform: translate(0,0); }
-        to { transform: translate(-20%, -20%); }
-    }
-    @keyframes starMove3 {
-        from { transform: translate(0,0); }
-        to { transform: translate(-5%, -5%); }
-    }
-
-    /* GALAXIS ÖRVÉNY */
-    .vortex {
+    /* MOZGÓ SZUPERNOVA-FÉNY */
+    .godray {
         position: absolute;
         width: 200%;
         height: 200%;
         left: -50%;
         top: -50%;
-        background: url("https://i.imgur.com/wfZfTYh.png") no-repeat center;
-        background-size: contain;
-        opacity: 0.3;
-        animation: spin 80s linear infinite;
-        filter: blur(2px);
+        background: radial-gradient(circle, rgba(255,255,255,0.2), transparent 60%);
+        mix-blend-mode: screen;
+        filter: blur(120px);
+        animation: rayMove 6s ease-in-out infinite alternate;
+        z-index: 2;
+    }
+    @keyframes rayMove {
+        from { transform: rotate(0deg) scale(1); opacity: 0.25; }
+        to { transform: rotate(20deg) scale(1.2); opacity: 0.4; }
     }
 
-    @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
+    /* CSILLAGMEZŐ PARALLAX */
+    .stars {
+        position: absolute;
+        width: 300%;
+        height: 300%;
+        background: url("https://i.imgur.com/3KcJY1w.png");
+        opacity: 0.25;
+        z-index: 1;
+        animation: starsMove 40s linear infinite;
+    }
+    @keyframes starsMove {
+        from { transform: translate(0,0) scale(1); }
+        to { transform: translate(-10%, -10%) scale(1.15); }
     }
 
-    /* CINEMATIC LETTERBOX */
-    .letter {
+    /* CINEMATIC FEL-LE CSÚSZÓ CSÍKOK */
+    .cinematicBar {
         position: absolute;
         width: 100%;
-        height: 120px;
+        height: 130px;
         background: black;
-        z-index: 100;
-        animation: slideBars 3s ease forwards;
+        z-index: 999;
+        animation: barsDrop 3s ease forwards;
     }
-    .top { top: -120px; }
-    .bottom { bottom: -120px; }
+    .top { top: -130px; }
+    .bottom { bottom: -130px; }
 
-    @keyframes slideBars {
-        to { transform: translateY(120px); }
-    }
-
-    /* MOZIS FÉNYCSÍK */
-    .light {
-        position: absolute;
-        top: 0;
-        left: -200%;
-        width: 200%;
-        height: 100%;
-        background: linear-gradient(120deg,
-            transparent 0%,
-            rgba(255,255,255,0.12) 50%,
-            transparent 100%);
-        animation: sweep 5s linear infinite;
-        z-index: 10;
-    }
-    @keyframes sweep {
-        from { transform: translateX(-100%); }
-        to { transform: translateX(200%); }
+    @keyframes barsDrop {
+        to { transform: translateY(130px); }
     }
 
-    /* LOGÓ VILLANÁS */
+    /* HATALMAS VILLANÁS A LOGÓNÁL */
     .flash {
         position: absolute;
         width: 100%;
         height: 100%;
         background: white;
         opacity: 0;
-        pointer-events: none;
         z-index: 1000;
-        animation: flashAnim 3s ease forwards 2.2s;
+        animation: flashEffect 2.6s ease forwards 2.2s;
     }
-
-    @keyframes flashAnim {
+    @keyframes flashEffect {
         0% { opacity: 0; }
-        10% { opacity: 1; }
-        25% { opacity: 0; }
+        20% { opacity: 1; }
+        60% { opacity: 0; }
         100% { opacity: 0; }
     }
 
-    /* LOGO KONTAINER */
+    /* RÉSZECSKEROBBANÁS */
+    .particles {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 50;
+        pointer-events: none;
+    }
+    .particle {
+        position: absolute;
+        background: rgba(255,80,30,1);
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(255,80,30,1);
+        animation: particleAnim 1.2s ease-out forwards;
+    }
+    @keyframes particleAnim {
+        from { transform: translate(0,0) scale(1); opacity: 1; }
+        to { transform: translate(calc(-50px + 100px * random()), calc(-50px + 100px * random())) scale(0); opacity: 0; }
+    }
+
+    /* LOGÓ KONTAINER */
     .logoBox {
         position: absolute;
         top: 50%;
@@ -131,63 +120,60 @@
         transform: translate(-50%, -50%) scale(0.2);
         text-align: center;
         opacity: 0;
-        z-index: 999;
-        animation: logoZoom 4s ease forwards 2s;
+        animation: logoAppear 4.5s cubic-bezier(.1, .7, .1, 1) forwards 2.4s;
+        z-index: 800;
+    }
+    @keyframes logoAppear {
+        0% { opacity: 0; transform: scale(0.2) translate(-50%, -50%); }
+        100% { opacity: 1; transform: scale(1) translate(-50%, -50%); }
     }
 
-    @keyframes logoZoom {
-        from { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
-        to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-    }
-
-    /* 3D VILLÓGÓ LOGÓ */
+    /* ULTRA 3D FÉNYEZETT LOGÓ */
     .logo {
-        font-size: 150px;
+        font-size: 170px;
         color: #ff0000;
         text-transform: uppercase;
         letter-spacing: 14px;
         text-shadow:
-            0 0 40px red,
-            0 0 80px red,
-            10px 10px 0 #300,
-            20px 20px 0 #200;
-        animation: logoPulse 2.5s infinite alternate ease-in-out;
+            0 0 60px rgba(255,0,0,1),
+            0 0 120px rgba(255,0,0,0.9),
+            10px 10px 0 #200,
+            20px 20px 0 #100;
+        animation: megaPulse 3s infinite alternate ease-in-out;
     }
-
-    @keyframes logoPulse {
-        from { text-shadow: 0 0 30px red, 10px 10px 0 #200; }
-        to { text-shadow: 0 0 80px red, 20px 20px 0 #100; }
+    @keyframes megaPulse {
+        from { text-shadow: 0 0 60px red, 10px 10px 0 #200; }
+        to { text-shadow: 0 0 130px red, 25px 25px 0 #000; }
     }
 
     .subtitle {
-        font-size: 45px;
+        font-size: 48px;
         color: #ddd;
         opacity: 0;
-        letter-spacing: 5px;
-        animation: subtitleFade 3s ease forwards 4s;
+        letter-spacing: 6px;
+        animation: subtitleIn 3s ease forwards 4.5s;
     }
-
-    @keyframes subtitleFade {
+    @keyframes subtitleIn {
         to { opacity: 1; }
     }
 
-    /* FILM ZAJ */
+    /* FILM NOISE */
     .noise {
         position: absolute;
         width: 100%;
         height: 100%;
-        background: url('https://i.imgur.com/8aKp4vq.png');
-        opacity: 0.08;
+        background: url("https://i.imgur.com/8aKp4vq.png");
+        opacity: 0.1;
         mix-blend-mode: screen;
         animation: noiseMove 0.5s steps(4) infinite;
+        z-index: 5000;
         pointer-events: none;
-        z-index: 2000;
     }
     @keyframes noiseMove {
         0% { transform: translate(0,0); }
         25% { transform: translate(-5px,3px); }
-        50% { transform: translate(3px,-2px); }
-        75% { transform: translate(-2px,2px); }
+        50% { transform: translate(4px,-2px); }
+        75% { transform: translate(-3px,2px); }
         100% { transform: translate(0,0); }
     }
 
@@ -195,21 +181,19 @@
 </head>
 <body>
 
-<div class="stars1"></div>
-<div class="stars2"></div>
-<div class="stars3"></div>
+<div class="stars"></div>
+<div class="godray"></div>
 
-<div class="vortex"></div>
-<div class="light"></div>
+<div class="cinematicBar top"></div>
+<div class="cinematicBar bottom"></div>
 
-<div class="letter top"></div>
-<div class="letter bottom"></div>
+<div class="particles" id="particles"></div>
 
 <div class="flash"></div>
 
 <div class="logoBox">
     <div class="logo">SigMozi</div>
-    <div class="subtitle">A vetítés hamarosan kezdődik...</div>
+    <div class="subtitle">A vetítés most indul…</div>
 </div>
 
 <div class="noise"></div>
@@ -217,6 +201,19 @@
 <audio autoplay>
     <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_0daa68c14e.mp3">
 </audio>
+
+<script>
+/* RÉSZECSKEROBBANÁS GENERÁLÁS */
+for (let i = 0; i < 150; i++) {
+    const p = document.createElement("div");
+    p.className = "particle";
+    p.style.top = "50%";
+    p.style.left = "50%";
+    p.style.animationDelay = (Math.random() * 1.5) + "s";
+    p.style.transform = `translate(0,0) scale(${1 + Math.random()*2})`;
+    document.getElementById("particles").appendChild(p);
+}
+</script>
 
 </body>
 </html>
