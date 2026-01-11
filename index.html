@@ -3,14 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <title>SigMozi Ultra Cinematic</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
     body {
         margin: 0;
         height: 100vh;
         overflow: hidden;
-        background: url("sigmovie.png") no-repeat center center fixed;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 100%), url("sigmovie.png") no-repeat center center fixed;
         background-size: cover;
+        background-blend-mode: overlay;
         filter: brightness(0.85);
         font-family: 'Arial Black', sans-serif;
     }
@@ -177,6 +179,223 @@
         100% { transform: translate(0,0); }
     }
 
+    /* IFRAME BETŰLŐ MODAL */
+    .iframe-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 10000;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .iframe-modal.active {
+        display: flex;
+        animation: modalAppear 0.5s ease-out forwards;
+    }
+
+    @keyframes modalAppear {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .modal-title {
+        color: #ff0000;
+        font-size: 32px;
+        margin-bottom: 20px;
+        text-shadow: 0 0 15px rgba(255,0,0,0.7);
+        text-align: center;
+        max-width: 90%;
+    }
+
+    .url-input {
+        width: 80%;
+        max-width: 600px;
+        padding: 15px 20px;
+        font-size: 18px;
+        background: rgba(20, 20, 20, 0.9);
+        border: 2px solid #ff0000;
+        border-radius: 8px;
+        color: white;
+        outline: none;
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        font-family: monospace;
+    }
+
+    .url-input:focus {
+        box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+        border-color: #ff4444;
+    }
+
+    .button-container {
+        margin-top: 20px;
+        display: flex;
+        gap: 15px;
+    }
+
+    .modal-btn {
+        padding: 12px 25px;
+        font-size: 16px;
+        font-weight: bold;
+        background: rgba(255, 0, 0, 0.8);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .modal-btn:hover {
+        background: rgba(255, 50, 50, 0.9);
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+    }
+
+    .modal-btn.cancel {
+        background: rgba(100, 100, 100, 0.8);
+    }
+
+    .modal-btn.cancel:hover {
+        background: rgba(150, 150, 150, 0.9);
+    }
+
+    .iframe-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9000;
+        display: none;
+        background: #000;
+    }
+
+    .iframe-container.active {
+        display: block;
+        animation: iframeAppear 0.5s ease-out forwards;
+    }
+
+    @keyframes iframeAppear {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    #fullscreen-iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: white;
+    }
+
+    .close-iframe {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9001;
+        background: rgba(255, 0, 0, 0.9);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+    }
+
+    .close-iframe:hover {
+        background: rgba(255, 50, 50, 1);
+        transform: scale(1.1);
+    }
+
+    .close-iframe.active {
+        display: flex;
+    }
+
+    .instructions {
+        position: fixed;
+        bottom: 20px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 14px;
+        z-index: 100;
+        opacity: 0;
+        animation: showInstructions 1s ease forwards 6s;
+    }
+
+    @keyframes showInstructions {
+        to { opacity: 1; }
+    }
+
+    .examples {
+        margin-top: 15px;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 14px;
+        text-align: center;
+        max-width: 90%;
+    }
+
+    .example-item {
+        background: rgba(40, 40, 40, 0.5);
+        padding: 8px 12px;
+        border-radius: 4px;
+        margin: 5px;
+        display: inline-block;
+        border-left: 3px solid #ff0000;
+    }
+
+    .iframe-preview {
+        margin-top: 15px;
+        max-width: 600px;
+        width: 80%;
+        background: rgba(30, 30, 30, 0.8);
+        border: 1px solid #444;
+        border-radius: 6px;
+        padding: 12px;
+        color: #ccc;
+        font-size: 14px;
+        font-family: monospace;
+        text-align: left;
+        display: none;
+    }
+
+    .iframe-preview.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .preview-title {
+        color: #ff9900;
+        font-weight: bold;
+        margin-bottom: 5px;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    .extracted-url {
+        color: #4CAF50;
+        word-break: break-all;
+        font-size: 13px;
+    }
 </style>
 </head>
 <body>
@@ -198,12 +417,47 @@
 
 <div class="noise"></div>
 
+<!-- iFrame betöltő modal -->
+<div class="iframe-modal" id="iframe-modal">
+    <div class="modal-title">WEBOLDAL BETÖLTÉSE</div>
+    <input type="text" class="url-input" id="url-input" placeholder="Írd be a weboldal URL-jét vagy teljes iframe kódot">
+    
+    <div class="iframe-preview" id="iframe-preview">
+        <div class="preview-title">KINYERT URL:</div>
+        <div class="extracted-url" id="extracted-url"></div>
+    </div>
+    
+    <div class="button-container">
+        <button class="modal-btn" id="load-btn">Betöltés</button>
+        <button class="modal-btn cancel" id="cancel-btn">Mégse</button>
+    </div>
+    
+    <div class="examples">
+        <div class="example-item">https://example.com</div>
+        <div class="example-item">&lt;iframe src="https://videa.hu/..."&gt;</div>
+        <div class="example-item">&lt;iframe width="640" height="360" src="//videa.hu/player?v=..."&gt;</div>
+    </div>
+</div>
+
+<!-- Teljes képernyős iFrame -->
+<div class="iframe-container" id="iframe-container">
+    <iframe id="fullscreen-iframe"></iframe>
+</div>
+
+<!-- Bezáró gomb -->
+<button class="close-iframe" id="close-iframe">✕</button>
+
+<!-- Instrukciók -->
+<div class="instructions">
+    Nyomd meg az "e" billentyűt egy weboldal betöltéséhez | ESC vagy kattints a piros ✕ gombra a bezáráshoz
+</div>
+
 <audio autoplay>
     <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_0daa68c14e.mp3">
 </audio>
 
 <script>
-/* RÉSZECSKEROBBANÁS GENERÁLÁS */
+// RÉSZECSKEROBBANÁS GENERÁLÁS
 for (let i = 0; i < 150; i++) {
     const p = document.createElement("div");
     p.className = "particle";
@@ -212,6 +466,164 @@ for (let i = 0; i < 150; i++) {
     p.style.animationDelay = (Math.random() * 1.5) + "s";
     p.style.transform = `translate(0,0) scale(${1 + Math.random()*2})`;
     document.getElementById("particles").appendChild(p);
+}
+
+// iFrame betöltő funkciók
+const modal = document.getElementById('iframe-modal');
+const urlInput = document.getElementById('url-input');
+const loadBtn = document.getElementById('load-btn');
+const cancelBtn = document.getElementById('cancel-btn');
+const iframeContainer = document.getElementById('iframe-container');
+const fullscreenIframe = document.getElementById('fullscreen-iframe');
+const closeIframeBtn = document.getElementById('close-iframe');
+const iframePreview = document.getElementById('iframe-preview');
+const extractedUrlDisplay = document.getElementById('extracted-url');
+
+// "e" billentyű eseményfigyelő
+document.addEventListener('keydown', function(e) {
+    // "e" betű lenyomása (kis- és nagybetű egyaránt)
+    if (e.key === 'e' || e.key === 'E') {
+        modal.classList.add('active');
+        urlInput.focus();
+        e.preventDefault(); // Megakadályozza, hogy az "e" betű bekerüljön az inputba
+    }
+    
+    // ESC billentyű a modal bezárásához
+    if (e.key === 'Escape') {
+        if (modal.classList.contains('active')) {
+            modal.classList.remove('active');
+            iframePreview.classList.remove('active');
+        }
+        if (iframeContainer.classList.contains('active')) {
+            closeIframe();
+        }
+    }
+});
+
+// URL elemzése a bevitel során
+urlInput.addEventListener('input', function() {
+    const input = urlInput.value.trim();
+    iframePreview.classList.remove('active');
+    
+    // Ha iframe kódot érzékelünk
+    if (input.includes('<iframe') || input.includes('</iframe>')) {
+        const extractedUrl = extractUrlFromIframe(input);
+        if (extractedUrl) {
+            extractedUrlDisplay.textContent = extractedUrl;
+            iframePreview.classList.add('active');
+        }
+    }
+});
+
+// URL kinyerése iframe kódból
+function extractUrlFromIframe(iframeCode) {
+    // Többféle regex minta az src attribútum kinyerésére
+    const patterns = [
+        /src\s*=\s*["']([^"']+)["']/i,        // src="url"
+        /src\s*=\s*([^"'\s>]+)/i,              // src=url (idézőjelek nélkül)
+        /src\s*:\s*["']([^"']+)["']/i          // src: "url" (alternatív formátum)
+    ];
+    
+    for (const pattern of patterns) {
+        const match = iframeCode.match(pattern);
+        if (match && match[1]) {
+            let url = match[1].trim();
+            
+            // Ha a URL //-el kezdődik (protocol-relative), hozzáadjuk a https://-t
+            if (url.startsWith('//')) {
+                url = 'https:' + url;
+            }
+            // Ha nem tartalmaz http:// vagy https:// és nem //-el kezdődik
+            else if (!url.startsWith('http://') && !url.startsWith('https://') && !url.includes('://')) {
+                url = 'https://' + url;
+            }
+            
+            return url;
+        }
+    }
+    
+    return null;
+}
+
+// URL betöltése gombra kattintva
+loadBtn.addEventListener('click', function() {
+    loadUrl();
+});
+
+// URL betöltése Enter billentyűvel
+urlInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        loadUrl();
+    }
+});
+
+// Mégse gomb
+cancelBtn.addEventListener('click', function() {
+    modal.classList.remove('active');
+    iframePreview.classList.remove('active');
+    urlInput.value = '';
+});
+
+// iFrame bezárása
+closeIframeBtn.addEventListener('click', closeIframe);
+
+// URL betöltésének függvénye
+function loadUrl() {
+    let input = urlInput.value.trim();
+    
+    // Ellenőrzés, hogy üres-e
+    if (!input) {
+        alert('Kérlek, adj meg egy URL-t vagy iframe kódot!');
+        return;
+    }
+    
+    let finalUrl = '';
+    
+    // Ha iframe kód
+    if (input.includes('<iframe') || input.includes('</iframe>')) {
+        const extractedUrl = extractUrlFromIframe(input);
+        if (extractedUrl) {
+            finalUrl = extractedUrl;
+        } else {
+            alert('Nem sikerült kinyerni az URL-t az iframe kódból. Ellenőrizd a formátumot!');
+            return;
+        }
+    }
+    // Ha sima URL
+    else {
+        finalUrl = input;
+        
+        // Ellenőrzés, hogy tartalmaz-e http:// vagy https:// előtagot
+        if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
+            // Ha //-el kezdődik (protocol-relative)
+            if (finalUrl.startsWith('//')) {
+                finalUrl = 'https:' + finalUrl;
+            } else {
+                finalUrl = 'https://' + finalUrl;
+            }
+        }
+    }
+    
+    console.log('Betöltés:', finalUrl);
+    
+    // Betöltjük az URL-t az iframe-be
+    fullscreenIframe.src = finalUrl;
+    
+    // Modal bezárása
+    modal.classList.remove('active');
+    iframePreview.classList.remove('active');
+    urlInput.value = '';
+    
+    // iFrame megjelenítése
+    iframeContainer.classList.add('active');
+    closeIframeBtn.classList.add('active');
+}
+
+// iFrame bezárása
+function closeIframe() {
+    iframeContainer.classList.remove('active');
+    closeIframeBtn.classList.remove('active');
+    fullscreenIframe.src = ''; // iFrame tartalom törlése
 }
 </script>
 
