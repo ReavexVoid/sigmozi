@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SIGMOZI – Squid Game Játék</title>
+  <title>SIGMOZI – Squid Game</title>
   <style>
     body {
       margin: 0;
@@ -11,14 +11,13 @@
       background: linear-gradient(180deg, #0b0f1a, #141a2e);
       color: #ffffff;
       text-align: center;
-      padding: 50px;
+      padding: 100px 20px;
     }
     h1 { font-size: 3rem; color: #ff3b6f; }
-    h2 { color: #00ffd5; margin-top: 40px; }
     #gameDisplay {
-      margin-top: 50px;
-      font-size: 2rem;
-      padding: 40px;
+      margin-top: 100px;
+      font-size: 2.5rem;
+      padding: 60px;
       border: 3px solid #00ffd5;
       border-radius: 20px;
       min-height: 150px;
@@ -27,16 +26,15 @@
       justify-content: center;
       background: rgba(0,0,0,0.3);
     }
-    p { font-size: 1.2rem; }
+    p { font-size: 1.3rem; margin-top: 20px; color: #aaaaaa; }
   </style>
 </head>
 <body>
 
 <h1>SIGMOZI – Squid Game</h1>
-<p>Nyomd meg az 1-es, 2-es vagy 3-as billentyűt a játék kiválasztásához:</p>
-<p>1️⃣ Red Light Green Light | 2️⃣ Glass Bridge | 3️⃣ Tug of War</p>
+<p>Nyomd meg az 1-es, 2-es vagy 3-as billentyűt a következő játékhoz:</p>
 
-<div id="gameDisplay">Válassz játékot!</div>
+<div id="gameDisplay">Next Game: -</div>
 
 <script>
   const display = document.getElementById('gameDisplay');
@@ -44,16 +42,16 @@
   document.addEventListener('keydown', (e) => {
     switch(e.key) {
       case '1':
-        display.textContent = '🟢🔴 Red Light – Green Light aktív!';
+        display.textContent = 'Next Game: Red Light Green Light';
         break;
       case '2':
-        display.textContent = '🟦 Glass Bridge aktív!';
+        display.textContent = 'Next Game: Glass Bridge';
         break;
       case '3':
-        display.textContent = '🪢 Tug of War aktív!';
+        display.textContent = 'Next Game: Tug of War';
         break;
       default:
-        display.textContent = 'Válassz játékot az 1, 2 vagy 3 billentyűvel!';
+        display.textContent = 'Next Game: -';
     }
   });
 </script>
