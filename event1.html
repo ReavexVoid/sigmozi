@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIGMOZI – Squid Game Játék</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #0b0f1a, #141a2e);
+      color: #ffffff;
+    }
+    header {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    h1 {
+      font-size: 4rem;
+      letter-spacing: 4px;
+    }
+    h1 span { color: #ff3b6f; }
+    .tagline {
+      font-size: 1.3rem;
+      max-width: 700px;
+      opacity: 0.9;
+    }
+    .btn {
+      margin-top: 40px;
+      padding: 15px 40px;
+      background: #ff3b6f;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+    section {
+      padding: 80px 10%;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    h2 { color: #ff3b6f; }
+    .games {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .card {
+      background: rgba(0,0,0,0.4);
+      padding: 25px;
+      border-radius: 16px;
+      text-align: center;
+    }
+    footer {
+      text-align: center;
+      padding: 40px;
+      background: rgba(0,0,0,0.5);
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>SIG<span>MOZI</span></h1>
+  <p class="tagline">
+    Squid Game ihlette közösségi játékélmény. Nincs erőszak,
+    nincs horror – csak izgalmas kihívások, nagy csoportokra tervezve.
+  </p>
+  <button class="btn">JÁTÉK INDÍTÁSA</button>
+</header>
+
+<section>
+  <h2>Mi ez?</h2>
+  <p>
+    A SIGMOZI Squid Game egy moziteremre optimalizált, családbarát játék,
+    ahol a résztvevők csapatokban versenyeznek. A vászon mutatja a játékokat,
+    a közönség együtt dönt és játszik.
+  </p>
+</section>
+
+<section>
+  <h2>Játékok</h2>
+  <div class="games">
+    <div class="card">
+      🟢🔴 <strong>Red Light – Green Light</strong><br />
+      Reakció és figyelem. Rossz mozdulat = pontvesztés.
+    </div>
+    <div class="card">
+      🟦 <strong>Glass Bridge</strong><br />
+      Válassz utat! Jó döntés visz tovább.
+    </div>
+    <div class="card">
+      🍪 <strong>Dalgona</strong><br />
+      Precíz kattintás és időzítés.
+    </div>
+    <div class="card">
+      🪢 <strong>Tug of War</strong><br />
+      Csapat vs csapat kihívás.
+    </div>
+    <div class="card">
+      🦑 <strong>Final Game</strong><br />
+      Gyors döntések a győzelemért.
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Kinek ajánlott?</h2>
+  <p>
+    Gyerekeknek, tiniknek, felnőtteknek, családoknak és baráti társaságoknak.
+    Egy játék, amit bárki megérthet és élvezhet.
+  </p>
+</section>
+
+<footer>
+  © SIGMOZI – Squid Game Community Edition<br />
+  Játsszatok együtt. Döntsetek együtt.
+</footer>
+
+</body>
+</html>
